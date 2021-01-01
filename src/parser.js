@@ -33,6 +33,8 @@ const defaults = {
         extensions: ['.js', '.jsx']
     },
 
+	taggedTemplateCalls: false,
+
     trans: { // Trans component (https://github.com/i18next/react-i18next)
         component: 'Trans',
         i18nKey: 'i18nKey',
@@ -400,9 +402,9 @@ class Parser {
             ')' + matchSpecialCharacters;
         const pattern = '(?:(?:^\\s*)|[^a-zA-Z0-9_])' +
             '(?:' + matchFuncs + ')' +
-            '\\(' + stringGroup +
+            '\\(' + (this.options.taggedTemplateCalls?'?':'') + stringGroup +
             '(?:[\\,]' + stringGroup + ')?' +
-            '[\\,\\)]';
+            '[\\,\\)]' + (this.options.taggedTemplateCalls?'?':'');
         const re = new RegExp(pattern, 'gim');
 
         let r;
